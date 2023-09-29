@@ -1,11 +1,9 @@
 package com.example.leadergroup_assignment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
-import android.widget.Toast
+import android.util.Log
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +12,13 @@ import com.example.leadergroup_assignment.model.Student
 import com.example.leadergroup_assignment.viewmodel.StudentViewModel
 import com.example.leadergroup_assignment.viewmodel.StudentViewModelFactory
 
+
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = MainActivity::class.simpleName
     private lateinit var studentViewModel: StudentViewModel
 
-    private lateinit var searchView:EditText
+    private lateinit var searchView: SearchView
 
     private lateinit var studentAdapter: StudentAdapter
 
@@ -33,19 +33,33 @@ class MainActivity : AppCompatActivity() {
 
         val viewModelFactory = StudentViewModelFactory(repository)
 
-        studentViewModel = ViewModelProvider(this,viewModelFactory).get(StudentViewModel::class.java)
+        studentViewModel =
+            ViewModelProvider(this, viewModelFactory).get(StudentViewModel::class.java)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-        //init the Custom adataper
-        studentAdapter = StudentAdapter(this)
-        //set the CustomAdapter
-        recyclerView.adapter = studentAdapter
-        studentViewModel.studentList.observe(this){
-            studentAdapter.setDeveloperList(it.students)
 
+        studentViewModel.studentList.observe(this) {
+            studentAdapter = StudentAdapter(this, it.students as ArrayList<Student>)
+            recyclerView.adapter = studentAdapter
         }
+
+
+
+
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                Log.e(TAG, " data search$newText")
+                studentAdapter.filter?.filter(newText)
+                return true
+            }
+        })
     }
 
 

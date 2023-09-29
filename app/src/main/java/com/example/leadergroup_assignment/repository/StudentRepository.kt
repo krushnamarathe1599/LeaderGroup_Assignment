@@ -19,27 +19,26 @@ class StudentRepository(
     private val TAG = "StudentRepository"
     private val studentLiveData = MutableLiveData<StudentDetails>()
 
-    val studentList : LiveData<StudentDetails>
+    val studentList: LiveData<StudentDetails>
         get() = studentLiveData
 
-    suspend fun getStudent(){
-        if (MyUtils.isInternetAvailable(applicationContext)){
+    suspend fun getStudent() {
+        if (MyUtils.isInternetAvailable(applicationContext)) {
 
             val result = apiInterface.getStudentDetails()
-            if (result.body()!=null) {
+            if (result.body() != null) {
                 Log.d(TAG, "Response Body = " + result.body())
                 studentDatabase.studentDao().insertStudent(result.body()!!.students)
                 Log.d(TAG, "Data Inserted Into Database")
                 studentLiveData.postValue(result.body())
-            }else{
+            } else {
                 Log.e(TAG, "Failed to load student data")
             }
-        }
-        else{
+        } else {
             Log.e(TAG, "Failed to connect to internet loading data from local database")
             val student = studentDatabase.studentDao().getStudent()
 
-            val studentList = StudentDetails("success",student)
+            val studentList = StudentDetails("success", student)
 
             studentLiveData.postValue(studentList)
         }

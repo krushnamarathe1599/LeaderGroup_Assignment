@@ -1,9 +1,9 @@
 package com.example.leadergroup_assignment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.leadergroup_assignment.Constants.Companion.STUDENT_DATA
 import com.example.leadergroup_assignment.model.Student
 
@@ -21,7 +21,7 @@ class DetailsActivity : AppCompatActivity() {
         val resultGender = findViewById<TextView>(R.id.result_gender)
         val resultMajor = findViewById<TextView>(R.id.result_major)
         val resultGpa = findViewById<TextView>(R.id.result_gpa)
-        val student :Student = intent.getParcelableExtra(STUDENT_DATA)!!
+        val student: Student = intent.getParcelableExtra(STUDENT_DATA)!!
 
         Log.d(TAG, "$student")
         resultFirstName.text = student.first_name

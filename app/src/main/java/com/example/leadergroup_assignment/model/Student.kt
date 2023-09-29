@@ -17,7 +17,6 @@ data class Student(
     val gpa: Double
 
 
-
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

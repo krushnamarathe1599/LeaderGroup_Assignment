@@ -8,7 +8,7 @@ import com.example.leadergroup_assignment.repository.StudentRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class StudentViewModel(private val studentRepository: StudentRepository): ViewModel() {
+class StudentViewModel(private val studentRepository: StudentRepository) : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -16,6 +16,6 @@ class StudentViewModel(private val studentRepository: StudentRepository): ViewMo
         }
     }
 
-    val studentList : LiveData<StudentDetails>
+    val studentList: LiveData<StudentDetails>
         get() = studentRepository.studentList
 }

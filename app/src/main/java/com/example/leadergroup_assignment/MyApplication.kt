@@ -16,6 +16,6 @@ class MyApplication : Application() {
 
         val database = StudentDatabase.getDatabase(applicationContext)
 
-        studentRepository = StudentRepository(apiInterface,database,applicationContext)
+        studentRepository = StudentRepository(apiInterface, database, applicationContext)
     }
 }

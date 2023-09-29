@@ -8,9 +8,10 @@ object ApiUtilities {
 
     val BASE_URL = "https://run.mocky.io/v3/"
 
-    fun getInstance() : Retrofit{
+    fun getInstance(): Retrofit {
 
-        return Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build()
 
 
     }
